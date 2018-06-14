@@ -1,21 +1,32 @@
 # installation
-virtualenv venv --python=python3
-source venv/bin/activate
-pip install mecab-python3
-git clone https://github.com/attardi/wikiextractor.git
+CDATE=20180601
+
+pip3.6 install mecab-python3
+GITDIR=./wikiextractor
+if [ -e "$GITDIR" ]; then
+    echo "Dir $GITDIR exists."
+else
+    git clone https://github.com/attardi/wikiextractor.git
+fi
 cd wikiextractor
-mkdir extracted
+mkdir extracted2
 
 # download, preprocess and make data
-wget https://dumps.wikimedia.org/jawiki/20171001/jawiki-20171001-pages-articles.xml.bz2
-python WikiExtractor.py -o extracted jawiki-20171001-pages-articles.xml.bz2
-cd ..
-mv wikiextractor/extracted .
-python process.py
-python tokenize.py
+TARGETURL=https://dumps.wikimedia.org/jawiki/$CDATE/jawiki-$CDATE-pages-articles.xml.bz2
+TARGETFILE=jawiki-$CDATE-pages-articles.xml.bz2
 
-# post process
-rm wikiextractor/jawiki-20171001-pages-articles.xml.bz2
-rm tmp.txt
-rm -rf extracted
-rm -rf venv
+if [ -e "$TARGETFILE" ]; then
+    echo "File $TARGETFILE exists."
+else
+    curl $TARGETURL >$TARGETFILE
+fi
+
+if [ -e "./extracted2" ]; then
+    echo "extracted2 directory is."
+else
+    python3 WikiExtractor.py --json -b 20M -o extracted2 -q $TARGETFILE
+fi
+
+cd ..
+python3 ExtractCorpus.py wikiextractor/extracted2 ja.text8.$CDATE.100MB
+
