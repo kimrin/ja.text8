@@ -1,11 +1,13 @@
 # ja.text8
-ja.text8 is a small (100MB) text corpus from the web (japanese wikipedia).
+original ja.text8 is a small (100MB) text corpus from the web (japanese wikipedia).
+it modified by kimrin for one line per one article format.
 
 
-You can download ja.text8 corpus from the following link:
+You can download ja.text8 corpus from the following link(original corpus):
 
 * [ja.text8.zip](https://s3-ap-northeast-1.amazonaws.com/dev.tech-sketch.jp/chakki/public/ja.text8.zip)
 
+this repository contains ja.text8.20180601.100MB that is body of the new corpus.
 
 # Usage
 You can train word2vec by ja.text8.
@@ -43,7 +45,6 @@ Great!
 # Requirements
 * Python 3.x
 * MeCab
-* virtualenv
 
 # Make corpus by yourself
 You can download ja.text8.
