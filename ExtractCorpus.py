@@ -111,7 +111,7 @@ def make_corpus_and_metainfo(indices={}, sequence=[]):
             new_text = wakachigaki(each_line)
             new_line_list.append(new_text)
 
-        add_line = u''.join(new_line_list)
+        add_line = u' '.join(new_line_list)
         add_line_bytes = length_of_unicode_string(stri=add_line)
         total_bytes += add_line_bytes
         if total_bytes >= LIMIT_BYTES:
